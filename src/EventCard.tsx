@@ -1,18 +1,36 @@
+import { Button } from "./@/components/ui/button";
+
 interface EventCardProps {
-	title: string;
-	startDate: Date;
-	endDate: Date;
+	capacity: number;
 	description: string;
+	endDate: string;
+	startDate: string;
+	title: string;
+	venueName: string;
 }
 
-function EventCard({ title, startDate, endDate, description }: EventCardProps) {
+function EventCard({
+	capacity,
+	description,
+	endDate,
+	startDate,
+	title,
+	venueName,
+}: EventCardProps) {
 	return (
-		<div className="m-2 border p-4">
-			<h2>{title}</h2>
-			<p className="text-gray-500">
-				{formatDate(startDate)} - {formatDate(endDate)}
-			</p>
-			<p>{description}</p>
+		<div className="mb-4 border p-4 rounded-md flex justify-between items-center flex-grow-0 xl:flex-row flex-col">
+			<div className="flex-col flex xl:p-0 p-4">
+				<h2>{title}</h2>
+				<p className="text-gray-500 text-sm">{venueName}</p>
+				<p className="text-gray-500 text-xs">
+					{formatDate(new Date(startDate))} -{" "}
+					{formatDate(new Date(endDate))}
+				</p>
+				<p className="text-gray-400 text-xs">Capacity: {capacity}</p>
+
+				<p className="text-sm">{description}</p>
+			</div>
+			<Button className="h-full">Add to Calendar</Button>
 		</div>
 	);
 }
