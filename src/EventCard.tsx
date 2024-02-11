@@ -32,14 +32,14 @@ function formatDate(date: Date) {
 		"Nov",
 		"Dec",
 	];
-	let day = date.getDate();
+	const day = date.getDate();
 	const month = months[date.getMonth()];
 	const year = date.getFullYear();
-	let hour = date.getHours();
-	let minute = date.getMinutes();
+	const hour = date.getHours();
+	const minute = date.getMinutes();
 
 	// Adding leading zero to minutes if less than 10
-	minute = minute < 10 ? "0" + minute : minute;
+	const minute_string = minute < 10 ? "0" + minute : minute;
 
 	// Determining the suffix for the day
 	let suffix = "th";
@@ -47,7 +47,7 @@ function formatDate(date: Date) {
 	else if (day === 2 || day === 22) suffix = "nd";
 	else if (day === 3 || day === 23) suffix = "rd";
 
-	return `${day}${suffix} ${month} ${year} ${hour}:${minute}`;
+	return `${day}${suffix} ${month} ${year} ${hour}:${minute_string}`;
 }
 
 export default EventCard;
