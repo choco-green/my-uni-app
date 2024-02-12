@@ -71,9 +71,9 @@ function CustomToolBar({
 						<DropdownMenuRadioItem value="day">
 							Day
 						</DropdownMenuRadioItem>
-						<DropdownMenuRadioItem value="agenda">
+						{/* <DropdownMenuRadioItem value="agenda">
 							Agenda
-						</DropdownMenuRadioItem>
+						</DropdownMenuRadioItem> */}
 					</DropdownMenuRadioGroup>
 				</DropdownMenuContent>
 			</DropdownMenu>
