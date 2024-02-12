@@ -1,13 +1,20 @@
 import moment from "moment";
-import React, { useState } from "react";
-import { Calendar, Event, momentLocalizer } from "react-big-calendar";
+import React, { useCallback, useState } from "react";
+import {
+	Calendar,
+	Event,
+	EventPropGetter,
+	NavigateAction,
+	View,
+	momentLocalizer,
+} from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import CustomToolBar from "./CustomToolBar";
 import Events from "./Events";
-import fetchCalendarEvents from "./apiCalls/fetchCalendarEvents";
 
 const localizer = momentLocalizer(moment);
 
-interface CalendarEvent {
+export interface CalendarEvent {
 	startDate: string;
 	endDate: string;
 	description: string;
@@ -20,44 +27,128 @@ function MainPage() {
 	const [calendarEvents, setCalendarEvents] = useState<Event[] | undefined>(
 		undefined
 	);
+	const [view, setView] = useState<View>("week");
+	const [navigation, setNavigation] = useState<NavigateAction | undefined>(
+		undefined
+	);
+	const [date, setDate] = useState<Date>(new Date());
+	const [selectedEvent, setSelectedEvent] = useState<Event | undefined>(
+		undefined
+	);
+
+	const handleSelected = (event: Event) => {
+		setSelectedEvent(event);
+		console.info("[handleSelected - event]", event);
+	};
 
 	React.useEffect(() => {
-		fetchCalendarEvents().then((fetchedEvents: CalendarEvent[]) => {
-			const ConvertedEvents = fetchedEvents.map((event) => {
-				return {
-					title: event.title,
-					start: new Date(event.startDate),
-					end: new Date(event.endDate),
-					resource: {
-						description: event.description,
-						venueId: event.venueId,
-						id: event.id,
-					},
-				} as Event;
-			});
-			setCalendarEvents(ConvertedEvents);
-			console.log(ConvertedEvents);
-		});
+		// fetchCalendarEvents().then((fetchedEvents: CalendarEvent[]) => {
+		// 	const ConvertedEvents = fetchedEvents.map((event) => {
+		// 		return {
+		// 			title: event.title,
+		// 			start: new Date(event.startDate),
+		// 			end: new Date(event.endDate),
+		// 			resource: {
+		// 				description: event.description,
+		// 				venueId: event.venueId,
+		// 				id: event.id,
+		// 			},
+		// 		} as Event;
+		// 	});
+		// 	setCalendarEvents(ConvertedEvents);
+		// });
+
+		if (navigation !== undefined) {
+			onNavigate(date, view, navigation);
+			setNavigation(undefined);
+		}
+	}, [navigation, date, view]);
+
+	const EventPropGetter: EventPropGetter<Event> = useCallback((event) => {
+		console.log(event);
+		return {};
 	}, []);
 
 	return (
-		calendarEvents && (
-			<div className="grid grid-col-5 h-full">
-				<div className="calendar-wrapper col-start-1 col-end-4 pt-8">
-					<Calendar
-						className="calendar-wrapper__calendar"
-						localizer={localizer}
-						events={calendarEvents}
-						startAccessor="start"
-						endAccessor="end"
-					/>
-				</div>
-				<div className="events-wrapper col-start-4 col-end-5 h-[100vh]">
-					<Events />
-				</div>
+		<div className="flex h-full">
+			<div className="flex flex-col pt-8 flex-grow">
+				<CustomToolBar
+					date={date}
+					view={view}
+					setView={setView}
+					setNavigation={setNavigation}
+				/>
+				<Calendar
+					date={date}
+					localizer={localizer}
+					events={calendarEvents}
+					startAccessor="start"
+					endAccessor="end"
+					toolbar={false}
+					view={view}
+					onNavigate={onNavigate}
+					eventPropGetter={EventPropGetter}
+					onSelectEvent={handleSelected}
+					selected={selectedEvent}
+				/>
 			</div>
-		)
+			<div className="events-wrapper col-start-4 col-end-5 h-[100vh]">
+				<Events
+					handleAddToCalendar={handleAddToCalendar}
+					calendarEvents={calendarEvents}
+				/>
+			</div>
+		</div>
 	);
+
+	function onNavigate(date: Date, view: View, action: NavigateAction) {
+		if (view === "month" && action === "NEXT") {
+			setDate(moment(date).add(1, "month").toDate());
+		}
+		if (view === "month" && action === "PREV") {
+			setDate(moment(date).subtract(1, "month").toDate());
+		}
+		if (view === "week" && action === "NEXT") {
+			setDate(moment(date).add(1, "week").toDate());
+		}
+		if (view === "week" && action === "PREV") {
+			setDate(moment(date).subtract(1, "week").toDate());
+		}
+		if ((view === "day" || view === "agenda") && action === "NEXT") {
+			setDate(moment(date).add(1, "day").toDate());
+		}
+		if ((view === "day" || view === "agenda") && action === "PREV") {
+			setDate(moment(date).subtract(1, "day").toDate());
+		}
+		if (action === "DATE") {
+			setDate(new Date());
+		}
+	}
+
+	function handleAddToCalendar(
+		startDate: string,
+		endDate: string,
+		description: string,
+		venueId: number,
+		title: string,
+		id: number
+	) {
+		setCalendarEvents((prevEvents) => {
+			return [
+				...(prevEvents || []),
+				{
+					title,
+					start: new Date(startDate),
+					end: new Date(endDate),
+					resource: {
+						description,
+						venueId,
+						id,
+					},
+				},
+			];
+		});
+	}
 }
 
 export default MainPage;

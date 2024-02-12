@@ -1,36 +1,76 @@
+import clsx from "clsx";
 import { Button } from "./@/components/ui/button";
+import { OurOwnEvent } from "./Events";
 
 interface EventCardProps {
+	id: number;
+	generatedCapacity: number;
 	capacity: number;
 	description: string;
 	endDate: string;
 	startDate: string;
 	title: string;
 	venueName: string;
+	venueId: number;
+	events: OurOwnEvent[];
+	addedToCalendar: boolean;
+	setEvents: React.Dispatch<React.SetStateAction<OurOwnEvent[] | undefined>>;
+	handleAddToCalendar: (
+		startDate: string,
+		endDate: string,
+		description: string,
+		venueId: number,
+		title: string,
+		id: number
+	) => void;
 }
 
 function EventCard({
+	id,
+	generatedCapacity,
 	capacity,
 	description,
 	endDate,
 	startDate,
 	title,
+	venueId,
 	venueName,
+	addedToCalendar,
+	handleAddToCalendar,
 }: EventCardProps) {
 	return (
-		<div className="mb-4 border p-4 rounded-md flex justify-between items-center flex-grow-0 xl:flex-row flex-col">
-			<div className="flex-col flex xl:p-0 p-4">
+		<div className="mb-4 border p-4 rounded-md flex justify-between items-center flex-grow-0 flex-col">
+			<div className="flex-col flex mb-4">
 				<h2>{title}</h2>
 				<p className="text-gray-500 text-sm">{venueName}</p>
+				<p className="text-sm">{description}</p>
 				<p className="text-gray-500 text-xs">
 					{formatDate(new Date(startDate))} -{" "}
 					{formatDate(new Date(endDate))}
 				</p>
-				<p className="text-gray-400 text-xs">Capacity: {capacity}</p>
-
-				<p className="text-sm">{description}</p>
+				<p className="text-gray-400 text-xs">
+					Capacity: {generatedCapacity} / {capacity}
+				</p>
 			</div>
-			<Button className="h-full">Add to Calendar</Button>
+			<Button
+				className={clsx("w-full", {
+					"opacity-50 cursor-not-allowed":
+						generatedCapacity >= capacity || addedToCalendar,
+				})}
+				onClick={() =>
+					!addedToCalendar &&
+					handleAddToCalendar(
+						startDate,
+						endDate,
+						description,
+						venueId,
+						title,
+						id
+					)
+				}
+			>
+				Add to Calendar
+			</Button>
 		</div>
 	);
 }
