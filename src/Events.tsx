@@ -15,9 +15,11 @@ import { cn } from "./@/lib/utils";
 import EventCard from "./EventCard";
 import fetchEvents from "./apiCalls/fetchEvents";
 
+import clsx from "clsx";
 import { DateTimePicker } from "./@/components/ui/date-time-picker/date-time-picker";
 import {
 	Dialog,
+	DialogClose,
 	DialogContent,
 	DialogDescription,
 	DialogFooter,
@@ -67,6 +69,7 @@ function Events({ handleAddToCalendar, calendarEvents }: EventsProps) {
 	const [endDate, setEndDate] = useState<Date>(new Date());
 	const [venueName, setVenueName] = useState<string>("");
 	const [venueCapacity, setVenueCapacity] = useState<number>(0);
+	const [submitted, setSubmitted] = useState<boolean>(false);
 
 	React.useEffect(() => {
 		fetchEvents().then((fetchedEvents: OurOwnEvent[]) => {
@@ -143,7 +146,13 @@ function Events({ handleAddToCalendar, calendarEvents }: EventsProps) {
 			<div className="bg-slate-100 p-4 rounded-md mt-4 w-[30rem] flex flex-col gap-4">
 				<Dialog>
 					<DialogTrigger asChild>
-						<Button>Host Events</Button>
+						<Button
+							className={clsx({
+								"aria[]": submitted,
+							})}
+						>
+							Host Events
+						</Button>
 					</DialogTrigger>
 					<DialogContent className="md:min-w-[40rem] w-full bg-slate-100">
 						<DialogHeader>
@@ -254,10 +263,20 @@ function Events({ handleAddToCalendar, calendarEvents }: EventsProps) {
 								/>
 							</div>
 						</div>
-						<DialogFooter>
+						<DialogClose asChild>
 							<Button
 								type="submit"
 								onClick={() => {
+									if (
+										!title ||
+										!description ||
+										!startDate ||
+										!endDate ||
+										!venueName ||
+										!venueCapacity
+									) {
+										return;
+									}
 									addToEventList();
 									handleAddToCalendar(
 										startDate.toISOString(),
@@ -271,7 +290,8 @@ function Events({ handleAddToCalendar, calendarEvents }: EventsProps) {
 							>
 								Submit Event
 							</Button>
-						</DialogFooter>
+						</DialogClose>
+						<DialogFooter></DialogFooter>
 					</DialogContent>
 				</Dialog>
 				<div className="flex gap-4 flex-col xl:flex-row">
@@ -279,6 +299,7 @@ function Events({ handleAddToCalendar, calendarEvents }: EventsProps) {
 						type="number"
 						placeholder="Capacity"
 						onChange={(e) => {
+							setSubmitted(true);
 							if (
 								title ||
 								description ||
