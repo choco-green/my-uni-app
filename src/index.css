@@ -26,13 +26,37 @@ html, body, #root {
     color: #172554;
 }
 
-
 .rbc-off-range-bg, .rbc-day-bg {
   background-color: #fff
 }
  
 .rbc-label {
     font-size: .75rem;
+}
+
+.rbc-time-header-cell :last-child, .rbc-time-view {
+    border-radius: 0 0.5rem 0 0;
+}
+
+.rbc-day-slot .rbc-events-container {
+    margin: 0;
+}
+
+.rbc-header {
+    color: #334155;
+}
+
+.rbc-calendar * {
+    border-color: #e2e8f0 !important;
+    color: #334155;
+}
+
+.rbc-day-slot .rbc-time-slot {
+    border-color: #f1f5f9 !important;
+}
+
+.rbc-current-time-indicator {
+    background-color: #f00;
 }
 
 @layer base {

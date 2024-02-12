@@ -14,7 +14,18 @@ import {
 import { cn } from "./@/lib/utils";
 import EventCard from "./EventCard";
 import fetchEvents from "./apiCalls/fetchEvents";
-import fetchFilteredEvents from "./apiCalls/fetchFilteredEvents";
+
+import { DateTimePicker } from "./@/components/ui/date-time-picker/date-time-picker";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "./@/components/ui/dialog";
+import { Label } from "./@/components/ui/label";
 
 export interface OurOwnEvent {
 	capacity: number;
@@ -43,19 +54,59 @@ function Events({ handleAddToCalendar, calendarEvents }: EventsProps) {
 	const [capacity, setCapacity] = useState<number | undefined>(undefined);
 	const [date, setDate] = React.useState<DateRange | undefined>(undefined);
 	const [events, setEvents] = useState<OurOwnEvent[] | undefined>(undefined);
+	const [allEvents, setAllEvents] = useState<OurOwnEvent[] | undefined>(
+		undefined
+	);
 	const [randomCapacity, setRandomCapacity] = useState<number[] | undefined>(
 		undefined
 	);
 
+	const [title, setTitle] = useState<string>("");
+	const [description, setDescription] = useState<string>("");
+	const [startDate, setStartDate] = useState<Date>(new Date());
+	const [endDate, setEndDate] = useState<Date>(new Date());
+	const [venueName, setVenueName] = useState<string>("");
+	const [venueCapacity, setVenueCapacity] = useState<number>(0);
+
 	React.useEffect(() => {
 		fetchEvents().then((fetchedEvents: OurOwnEvent[]) => {
+			if (!fetchedEvents) {
+				return;
+			}
+			fetchedEvents = fetchedEvents
+				.filter((event) => new Date(event.endDate) > new Date())
+				.sort(
+					(a, b) =>
+						new Date(a.startDate).getTime() -
+						new Date(b.startDate).getTime()
+				);
+			setAllEvents(fetchedEvents);
 			setEvents(fetchedEvents);
 		});
 	}, []);
 
-	async function onFilterClick() {
-		const fetchedEvents = await fetchFilteredEvents(date, capacity);
-		setEvents(fetchedEvents);
+	async function onFilter() {
+		const filteredEvents: OurOwnEvent[] | undefined = allEvents?.filter(
+			(event) => {
+				if (date && date.from && date.to) {
+					const startDate = new Date(event.startDate);
+					const endDate = new Date(event.endDate);
+					const from = new Date(date.from);
+					const to = new Date(date.to);
+					if (!(startDate >= from || endDate <= to)) {
+						return false;
+					}
+				}
+				if (capacity) {
+					if (!(event.capacity >= capacity)) {
+						return false;
+					}
+				}
+				return true;
+			}
+		);
+		console.log(filteredEvents, capacity, date);
+		setEvents(filteredEvents);
 	}
 
 	if (events && !randomCapacity) {
@@ -69,15 +120,178 @@ function Events({ handleAddToCalendar, calendarEvents }: EventsProps) {
 		setRandomCapacity(randomCapacity);
 	}
 
+	function addToEventList() {
+		const newEvent: OurOwnEvent = {
+			id: getNextId(),
+			title,
+			description,
+			startDate: startDate.toISOString(),
+			endDate: endDate.toISOString(),
+			venueName,
+			venueId: 1,
+			capacity: venueCapacity,
+		};
+		setEvents([...(events || []), newEvent]);
+	}
+
+	function getNextId() {
+		return events?.length ? events[events.length - 1].id + 1 : 1;
+	}
+
 	return (
 		events && (
-			<div className="mt-4 ml-4 mr-4 w-96">
-				<h1 className="text-2xl mb-2">Your Events</h1>
-				<div className="flex gap-4 mb-4 flex-col xl:flex-row">
+			<div className="bg-slate-100 p-4 rounded-md mt-4 w-[30rem] flex flex-col gap-4">
+				<Dialog>
+					<DialogTrigger asChild>
+						<Button>Host Events</Button>
+					</DialogTrigger>
+					<DialogContent className="md:min-w-[40rem] w-full bg-slate-100">
+						<DialogHeader>
+							<DialogTitle>
+								Host Your Event, Share Your Skill
+							</DialogTitle>
+							<DialogDescription>
+								Submit this form to give more details about what
+								you want to host
+							</DialogDescription>
+						</DialogHeader>
+						<div className="grid gap-4 py-4">
+							<div className="grid grid-cols-4 items-center gap-4">
+								<Label htmlFor="title" className="text-right">
+									Title
+								</Label>
+								<Input
+									id="title"
+									className="col-span-3"
+									onChange={(event) =>
+										setTitle(event.target.value)
+									}
+								/>
+							</div>
+							<div className="grid grid-cols-4 items-center gap-4">
+								<Label
+									htmlFor="description"
+									className="text-right"
+								>
+									Description
+								</Label>
+								<Input
+									id="description"
+									className="col-span-3"
+									onChange={(event) =>
+										setDescription(event.target.value)
+									}
+								/>
+							</div>
+							<div className="grid grid-cols-4 items-center gap-4">
+								<Label
+									htmlFor="username"
+									className="text-right"
+								>
+									Start Time
+								</Label>
+								<DateTimePicker
+									granularity="minute"
+									onChange={(date) => {
+										setStartDate(
+											date.toDate(getLocalTimeZone())
+										);
+										console.log(
+											date.toDate(getLocalTimeZone())
+										);
+									}}
+								/>
+							</div>
+							<div className="grid grid-cols-4 items-center gap-4">
+								<Label
+									htmlFor="username"
+									className="text-right"
+								>
+									End Time
+								</Label>
+								<DateTimePicker
+									granularity="minute"
+									onChange={(date) => {
+										setEndDate(
+											date.toDate(getLocalTimeZone())
+										);
+										console.log(
+											date.toDate(getLocalTimeZone())
+										);
+									}}
+								/>
+							</div>
+							<div className="grid grid-cols-4 items-center gap-4">
+								<Label
+									htmlFor="venueName"
+									className="text-right"
+								>
+									Venue Name
+								</Label>
+								<Input
+									id="venueName"
+									className="col-span-3"
+									onChange={(event) =>
+										setVenueName(event.target.value)
+									}
+								/>
+							</div>
+							<div className="grid grid-cols-4 items-center gap-4">
+								<Label
+									htmlFor="capacity"
+									className="text-right"
+								>
+									Capacity of Venue
+								</Label>
+								<Input
+									id="capacity"
+									className="col-span-3"
+									onChange={(event) => {
+										setVenueCapacity(
+											parseInt(event.target.value)
+										);
+									}}
+								/>
+							</div>
+						</div>
+						<DialogFooter>
+							<Button
+								type="submit"
+								onClick={() => {
+									addToEventList();
+									handleAddToCalendar(
+										startDate.toISOString(),
+										endDate.toISOString(),
+										description,
+										1,
+										title,
+										getNextId()
+									);
+								}}
+							>
+								Submit Event
+							</Button>
+						</DialogFooter>
+					</DialogContent>
+				</Dialog>
+				<div className="flex gap-4 flex-col xl:flex-row">
 					<Input
 						type="number"
 						placeholder="Capacity"
-						onChange={(e) => setCapacity(parseInt(e.target.value))}
+						onChange={(e) => {
+							if (
+								title ||
+								description ||
+								startDate ||
+								endDate ||
+								venueName ||
+								venueCapacity
+							) {
+								return;
+							}
+							setCapacity(parseInt(e.target.value));
+							onFilter();
+						}}
 					/>
 					<Popover>
 						<PopoverTrigger asChild>
@@ -85,7 +299,7 @@ function Events({ handleAddToCalendar, calendarEvents }: EventsProps) {
 								id="date"
 								variant={"outline"}
 								className={cn(
-									"justify-start text-left font-normal",
+									"justify-start text-left font-normal bg-slate-100",
 									!date && "text-muted-foreground"
 								)}
 							>
@@ -109,13 +323,14 @@ function Events({ handleAddToCalendar, calendarEvents }: EventsProps) {
 								initialFocus
 								mode="range"
 								defaultMonth={date?.from}
-								selected={date}
-								onSelect={setDate}
-								numberOfMonths={2}
+								onSelect={(dateRange) => {
+									setDate(dateRange);
+									onFilter();
+								}}
+								selected={{ from: date?.from, to: date?.to }}
 							/>
 						</PopoverContent>
 					</Popover>
-					<Button onClick={onFilterClick}>Filter</Button>
 				</div>
 				<div className="h-[90vh] overflow-auto">
 					{randomCapacity &&
@@ -129,7 +344,9 @@ function Events({ handleAddToCalendar, calendarEvents }: EventsProps) {
 								startDate={event.startDate}
 								title={event.title}
 								venueName={event.venueName}
-								generatedCapacity={randomCapacity[event.id]}
+								generatedCapacity={
+									randomCapacity[event.id] ?? 0
+								}
 								events={events}
 								setEvents={setEvents}
 								venueId={event.venueId}
@@ -153,6 +370,10 @@ function Events({ handleAddToCalendar, calendarEvents }: EventsProps) {
 
 function getRandomArbitrary(min: number, max: number) {
 	return Math.round(Math.random() * (max - min) + min);
+}
+
+function getLocalTimeZone() {
+	return Intl.DateTimeFormat().resolvedOptions().timeZone;
 }
 
 export default Events;

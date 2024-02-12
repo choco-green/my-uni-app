@@ -70,8 +70,8 @@ function MainPage() {
 	}, []);
 
 	return (
-		<div className="flex h-full">
-			<div className="flex flex-col pt-8 flex-grow">
+		<div className="flex h-full overflow-hidden">
+			<div className="flex flex-col flex-grow mx-2">
 				<CustomToolBar
 					date={date}
 					view={view}
@@ -86,13 +86,14 @@ function MainPage() {
 					endAccessor="end"
 					toolbar={false}
 					view={view}
+					onView={(view) => setView(view)}
 					onNavigate={onNavigate}
 					eventPropGetter={EventPropGetter}
 					onSelectEvent={handleSelected}
 					selected={selectedEvent}
 				/>
 			</div>
-			<div className="events-wrapper col-start-4 col-end-5 h-[100vh]">
+			<div className="events-wrapper col-start-4 col-end-5 h-[100vh] px-2">
 				<Events
 					handleAddToCalendar={handleAddToCalendar}
 					calendarEvents={calendarEvents}
