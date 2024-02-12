@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 async function fetchCalendarEvents() {
-    const url = 'https://anselong.pythonanywhere.com/events'
+    const url = 'http://localhost:5001/events'
 
     let response;
     try {

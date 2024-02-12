@@ -16,7 +16,7 @@ async function fetchFilteredEvents(dateRange: DateRange | undefined, capacity: n
     }
 
     // Construct the URL with query parameters
-    const url = `https://anselong.pythonanywhere.com/filter?${queryParams}`;
+    const url = `http://localhost:5001/filter?${queryParams}`;
 
     let response;
     try {

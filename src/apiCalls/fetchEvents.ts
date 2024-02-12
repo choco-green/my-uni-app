@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 async function fetchEvents() {
-    const url = 'https://anselong.pythonanywhere.com/filter?'
+    const url = 'http://localhost:5001/filter'
 
     let response;
     try {
