@@ -58,6 +58,136 @@ function MainPage() {
 		// 	setCalendarEvents(ConvertedEvents);
 		// });
 
+		const events: CalendarEvent[] = [
+			{
+				id: 101,
+				title: "Computer Science Lecture",
+				description: "Lecture on advanced algorithms",
+				startDate: "2024-02-12T09:00:00",
+				endDate: "2024-02-12T10:30:00",
+				venueId: 2,
+			},
+			{
+				id: 102,
+				title: "Mathematics Tutorial",
+				description: "Tutorial on calculus",
+				startDate: "2024-02-12T11:00:00",
+				endDate: "2024-02-12T12:30:00",
+				venueId: 3,
+			},
+			{
+				id: 103,
+				title: "Study Session",
+				description: "General study session",
+				startDate: "2024-02-12T14:00:00",
+				endDate: "2024-02-12T15:30:00",
+				venueId: 4,
+			},
+			{
+				id: 104,
+				title: "English Literature Seminar",
+				description: "Seminar on modern literature themes",
+				startDate: "2024-02-13T10:00:00",
+				endDate: "2024-02-13T11:30:00",
+				venueId: 5,
+			},
+			{
+				id: 105,
+				title: "Physics Lab",
+				description: "Practical experiments in physics",
+				startDate: "2024-02-13T13:00:00",
+				endDate: "2024-02-13T15:00:00",
+				venueId: 6,
+			},
+			{
+				id: 106,
+				title: "Computer Science Coding Lab",
+				description: "Hands-on coding session",
+				startDate: "2024-02-13T15:30:00",
+				endDate: "2024-02-13T17:00:00",
+				venueId: 2,
+			},
+			{
+				id: 107,
+				title: "Physics Lecture",
+				description: "Lecture on electromagnetism",
+				startDate: "2024-02-15T09:00:00",
+				endDate: "2024-02-15T10:30:00",
+				venueId: 6,
+			},
+			{
+				id: 108,
+				title: "English Literature Reading Group",
+				description: "Discussion on Shakespeare's works",
+				startDate: "2024-02-15T11:00:00",
+				endDate: "2024-02-15T12:30:00",
+				venueId: 5,
+			},
+			{
+				id: 109,
+				title: "Mathematics Problem-Solving Session",
+				description: "Solving complex problems",
+				startDate: "2024-02-15T14:00:00",
+				endDate: "2024-02-15T15:30:00",
+				venueId: 3,
+			},
+			{
+				id: 110,
+				title: "Computer Science Project Meeting",
+				description: "Weekly team meeting for projects",
+				startDate: "2024-02-16T10:00:00",
+				endDate: "2024-02-16T11:30:00",
+				venueId: 2,
+			},
+			{
+				id: 111,
+				title: "Physics Discussion Group",
+				description: "Discussing recent advancements in physics",
+				startDate: "2024-02-16T13:00:00",
+				endDate: "2024-02-16T14:30:00",
+				venueId: 6,
+			},
+			{
+				id: 112,
+				title: "Campus Science Club Meeting",
+				description: "Weekly club meeting",
+				startDate: "2024-02-16T15:00:00",
+				endDate: "2024-02-16T16:30:00",
+				venueId: 7,
+			},
+			{
+				id: 113,
+				title: "Mathematics Lecture",
+				description: "Lecture on advanced mathematics topics",
+				startDate: "2024-02-14T09:00:00",
+				endDate: "2024-02-14T10:30:00",
+				venueId: 3,
+			},
+			{
+				id: 114,
+				title: "Study Session",
+				description: "Focused study session on various subjects",
+				startDate: "2024-02-14T11:00:00",
+				endDate: "2024-02-14T12:30:00",
+				venueId: 4,
+			},
+		];
+
+		setCalendarEvents(
+			events.map((event) => {
+				return {
+					title: event.title,
+					start: new Date(event.startDate),
+					end: new Date(event.endDate),
+					resource: {
+						description: event.description,
+						venueId: event.venueId,
+						id: event.id,
+					},
+				} as Event;
+			})
+		);
+
 		if (navigation !== undefined) {
 			onNavigate(date, view, navigation);
 			setNavigation(undefined);
@@ -68,6 +198,8 @@ function MainPage() {
 		console.log(event);
 		return {};
 	}, []);
+
+	console.log(calendarEvents);
 
 	return (
 		<div className="flex h-full overflow-hidden">
