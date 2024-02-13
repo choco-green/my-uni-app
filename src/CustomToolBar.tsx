@@ -30,7 +30,7 @@ function CustomToolBar({
 	setNavigation,
 }: CustomToolBarProps) {
 	return (
-		<div className="flex content-center items-center mb-2 gap-4 m-4">
+		<div className="flex content-center items-center mb-4 gap-4 m-4">
 			<Button onClick={() => setNavigation("DATE")}>Today</Button>
 			<div className="bg-primary rounded-md">
 				<Button

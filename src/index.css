@@ -23,7 +23,10 @@ html, body, #root {
 
 .rbc-today, .rbc-event {
     background-color: #f1f5f9;
-    color: #172554;
+}
+
+.rbc-events-container .rbc-event{
+    background-color: #e0f2fe !important
 }
 
 .rbc-off-range-bg, .rbc-day-bg {
