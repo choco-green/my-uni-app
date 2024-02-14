@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 async function fetchCalendarEvents() {
-    const url = 'http://localhost:5001/events'
+    const url = 'http://localhost:5000/events'
 
     let response;
     try {

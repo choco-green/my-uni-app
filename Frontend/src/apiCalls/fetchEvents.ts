@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 async function fetchEvents() {
-    const url = 'http://localhost:5001/filter'
+    const url = 'http://localhost:5000/filter'
 
     let response;
     try {
