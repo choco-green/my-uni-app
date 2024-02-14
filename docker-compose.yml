@@ -3,14 +3,14 @@ services:
   api:
     build: ./Backend
     ports:
-      - "5001:5000" # Map host port 5001 to container port 5000
+      - "5000:5000"
     networks:
       - app-network
 
   website:
     build: ./Frontend
     ports:
-      - "8080:3000" # Map host port 8080 to container port 80 (assuming your web server listens on 80)
+      - "8080:3000"
     depends_on:
       - api
     networks:
