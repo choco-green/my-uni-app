@@ -1,6 +1,6 @@
 # IBM CIC Hackathon: Innovation Squad Member
 
-UniSkill - Submission project for group 16
+UniSkill - Submission project for group 16, finished over the course of 3 days.
 [Quick Link to The Worst Website Submission](https://github.com/AnselOngMJ/worst-website)
 
 ## Description
