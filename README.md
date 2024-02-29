@@ -71,12 +71,19 @@ cd my-uni-app
 docker compose up
 ```
 
+## Screenshots
+
+Showing the default view of the calendar with events and the host event page.
+![Default Screenshot with events](./images/default_screenshot_with_events.png)
+
+Showing Dialog for hosting an event
+![Host Event](./images/host_event.png)
+
+Showing the added events on the calendar
+![Added Events on Calendar](./images/added_events_on_calendar.png)
+
 ## Contributions:
 
 -   [@AnselOngMJ](https://github.com/AnselOngMJ) - Python Backend (Flask)
 -   [@choco_green](https://github.com/choco-green) - TS Frontend (React/Vite),
     Deployment (DigitalOcean)
-
-![Default Screenshot with events](./images/default_screenshot_with_events.png)
-![Host Event](./images/host_event.png)
-![Added Events on Calendar](./images/added_events_on_calendar.png)
