@@ -77,7 +77,11 @@ function Events({ handleAddToCalendar, calendarEvents }: EventsProps) {
 				return;
 			}
 			fetchedEvents = fetchedEvents
-				.filter((event) => new Date(event.endDate) > new Date())
+				.filter(
+					(event) =>
+						new Date(event.endDate) >
+						new Date("2024-02-12T00:00:00")
+				)
 				.sort(
 					(a, b) =>
 						new Date(a.startDate).getTime() -

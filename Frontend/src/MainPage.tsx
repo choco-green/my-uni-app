@@ -1,12 +1,12 @@
 import moment from "moment";
 import React, { useCallback, useState } from "react";
 import {
-	Calendar,
-	Event,
-	EventPropGetter,
-	NavigateAction,
-	View,
-	momentLocalizer,
+    Calendar,
+    Event,
+    EventPropGetter,
+    NavigateAction,
+    View,
+    momentLocalizer,
 } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import CustomToolBar from "./CustomToolBar";
@@ -31,7 +31,7 @@ function MainPage() {
 	const [navigation, setNavigation] = useState<NavigateAction | undefined>(
 		undefined
 	);
-	const [date, setDate] = useState<Date>(new Date());
+	const [date, setDate] = useState<Date>(new Date("2024-02-12T01:00:00"));
 	const [selectedEvent, setSelectedEvent] = useState<Event | undefined>(
 		undefined
 	);
