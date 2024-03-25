@@ -16,7 +16,7 @@ async function fetchFilteredEvents(dateRange: DateRange | undefined, capacity: n
     }
 
     // Construct the URL with query parameters
-    const url = `http://167.99.192.238:5000/filter?${queryParams}`;
+    const url = `http://167.99.192.238:7658/filter?${queryParams}`;
 
     let response;
     try {
