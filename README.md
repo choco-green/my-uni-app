@@ -1,89 +1,65 @@
-# IBM CIC Hackathon: Innovation Squad Member
+# 🏆 IBM CIC Hackathon Finalist — UniSkill
 
-UniSkill - Submission project for group 16, finished over the course of 3 days.
-[Quick Link to The Worst Website Submission](https://github.com/AnselOngMJ/worst-website)
+UniSkill is a student-focused platform designed to make peer-to-peer learning more accessible across university campuses.
 
-## Description
+Built in just 3 days during the IBM Client Innovation Centre (CIC) Hackathon, UniSkill enables students to discover, host, and participate in skill-sharing sessions, workshops, study groups, and community events. The platform aims to bridge the gap between students who want to learn new skills and those eager to share their knowledge, fostering a stronger culture of collaboration and continuous learning.
 
-UniSkill is a revolutionary platform designed to enhance the university
-experience by facilitating easy discovery and participation in skill-sharing
-sessions, workshops, and informal learning groups. Our goal is to foster a
-vibrant community where students can connect with peers sharing similar
-interests, thereby promoting a culture of collaborative learning and personal
-growth.
+Our team was awarded Finalist Recognition for the project's innovation, technical implementation, and potential impact on student engagement.
 
-## Features
+## 🚀 Problem
 
--   **Skill Sharing Sessions**: Enables users to find and join sessions where
-    they can learn new skills or share their own.
--   **Workshop Organization**: Streamlines the process of organizing workshops,
-    from planning to execution.
--   **Informal Learning Groups**: Facilitates the formation of informal learning
-    groups for peer-to-peer education.
--   **Room Booking Integration**: Simplifies the booking of spaces for various
-    activities.
--   **Event Scheduling**: Offers a comprehensive scheduling feature to
-    accommodate the diverse timetables of university students.
--   **Safety and Transparency Features**: Implements security measures to ensure
-    the safety and transparency of one-on-one and group events.
+Universities provide countless opportunities for learning beyond the classroom, yet students often struggle to:
 
-## Dependencies
+- Discover peer-led workshops and learning opportunities
+- Find students with complementary skills and interests
+- Organise informal learning groups efficiently
+- Manage event scheduling around busy academic timetables
+- Secure suitable spaces for collaborative activities
 
-Ensure you have these installed before proceeding.
+UniSkill addresses these challenges by providing a centralised platform for organising and participating in student-led learning experiences.
 
--   NodeJS
--   Python
--   (Optional) Docker
+## ✨ Features
 
-## Installation & Usage
+### 📚 Skill Sharing Sessions
+Discover and join peer-led sessions to learn new skills or teach others.
 
-You can run this locally or run it with docker-compose
+### 🎓 Workshop Management
+Create, organise, and manage workshops from planning through execution.
 
-### Locally
+### 👥 Learning Communities
+Form study groups and informal learning circles around shared interests.
 
--   Clone the repository:
+### 🏢 Room Booking Integration
+Reserve spaces for workshops, study sessions, and events.
 
-```bash
-git clone https://github.com/choco-green/my-uni-app.git
-```
+### 📅 Smart Event Scheduling
+Coordinate events around university schedules with an intuitive calendar interface.
 
--   Run the frontend
+### 🔒 Safety & Transparency
+Promote safer interactions through event visibility and participant transparency.
 
-```bash
-cd my-uni-app/Frontend/
-npm install
-npm run dev
-```
+## 🛠️ Tech Stack
 
--   Run the backend
+### Frontend
+- React
+- TypeScript
+- Vite
 
-```bash
-cd my-uni-app/Backend/
-pip install -r ./requirements.txt
-flask run
-```
+### Backend
+- Flask
+- Python
 
-### Run with docker-compose
+### Deployment
+- Docker
+- DigitalOcean
 
-```bash
-git clone https://github.com/choco-green/my-uni-app.git
-cd my-uni-app
-docker compose up
-```
+## 👨‍💻 Team
 
-## Screenshots
+- Ansel Ong — Backend Development (Flask)
+- Justin Fung (@choco-green) — Frontend Development (React/TypeScript), Deployment & Infrastructure
 
-Showing the default view of the calendar with events and the host event page.
-![Default Screenshot with events](./images/default_screenshot_with_events.png)
+## 🏅 Achievement
 
-Showing Dialog for hosting an event
-![Host Event](./images/host_event.png)
+IBM CIC Innovation Hackathon – Finalist Award
 
-Showing the added events on the calendar
-![Added Events on Calendar](./images/added_events_on_calendar.png)
-
-## Contributions:
-
--   [@AnselOngMJ](https://github.com/AnselOngMJ) - Python Backend (Flask)
--   [@choco_green](https://github.com/choco-green) - TS Frontend (React/Vite),
-    Deployment (DigitalOcean)
+Developed and presented as a proof-of-concept solution within a 3-day hackathon, demonstrating rapid prototyping, agile collaboration, and user-centred product desig
