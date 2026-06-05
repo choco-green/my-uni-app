@@ -1,5 +1,7 @@
 # 🏆 IBM CIC Hackathon Finalist — UniSkill
 
+![UniSkill calendar interface](images/default_screenshot_with_events.png)
+
 UniSkill is a student-focused platform designed to make peer-to-peer learning more accessible across university campuses.
 
 Built in just 3 days during the IBM Client Innovation Centre (CIC) Hackathon, UniSkill enables students to discover, host, and participate in skill-sharing sessions, workshops, study groups, and community events. The platform aims to bridge the gap between students who want to learn new skills and those eager to share their knowledge, fostering a stronger culture of collaboration and continuous learning.
